@@ -1,0 +1,65 @@
+/* Main Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: flex-start; /* Align navbar items to the left */
+  align-items: center;
+  background-color: #333;
+  padding: 0 10px; /* Optional: padding to give space around the navbar */
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+/* Navbar Buttons */
+.navbar-btn {
+  background-color: #c2a77d;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px; /* Add margin to move buttons to the left */
+}
+
+.navbar-btn:hover {
+  background-color: #d2a77d;
+}
+
+/* Sub Navbar Styling (displayed like a list vertically) */
+.sub-navbar {
+  display: none; /* Hide sub-navbar by default */
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #444;
+  padding: 10px 0;
+  margin-left: 10px; /* Optional: Adjust the left margin */
+}
+
+.sub-navbar button {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #c2a77d;
+  border: none;
+  color: black;
+  text-align: left;
+  border-bottom: 1px solid #bbb;
+}
+
+.sub-navbar button:hover {
+  background-color: #d2a77d;
+}
+
+.sub-navbar button:last-child {
+  border-bottom: none;
+}
+
+
