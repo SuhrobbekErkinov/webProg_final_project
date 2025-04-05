@@ -1,63 +1,88 @@
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
+    background-color: rgb(99, 0, 0);
+    color: white;
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center;
+    padding: 0cm 1cm;
+    width: 100%; /* Ensure navbar takes the full width */
+}
+
+.navbar h1 {
+    font-family: 'Serif'; /* Apply font similar to the navbar name */
+    text-transform: uppercase; /* Make the font uppercase for consistency */
+    margin-right: 20px; /* Space between the navbar title and the buttons */
 }
 
 .menu {
-  display: flex;
+    display: flex;
+    gap: 20px; /* Space out the buttons a bit */
 }
 
 .dropdown {
-  position: relative;
+    position: relative;
 }
 
 button {
-  padding: 10px 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  cursor: pointer;
+    color: white;
+    padding: 10px 20px; /* Adjust padding for better centering */
+    background-color: rgb(99, 0, 0); /* Transparent background */
+    cursor: pointer;
+    font-size: 20px; /* Font size for readability */
+    display: flex;
+    font-family: 'Serif'; /* Apply font similar to the navbar name */
+    text-transform: uppercase; /* Make the font uppercase for consistency */
+    outline: none; /* Remove the blue outline when the button is focused */
+    border: none; /* Remove any borders */
+    box-shadow: none; /* Ensure no shadow is applied */
 }
 
 button:hover {
-  background-color: #f0f0f0;
+    background-color: rgb(99, 0, 0); /* Darken the background on hover */
 }
 
 button.active {
-  color: red; /* Highlight the active button */
-  font-weight: bold;
+    color: red; /* Highlight the active button */
+    font-weight: bold;
 }
 
 .sub-navbar {
-  position: absolute;
-  top: 30px;
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+    position: absolute;
+    top: 40px; /* Adjust to position below the main button */
+    background-color: rgb(99, 0, 0); /* Ensure sub-navbar background matches main button */
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    min-width: 150px; /* Set a minimum width for the dropdown */
 }
 
 .sub-navbar button {
-  padding: 10px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
+    padding: 5px 20px; /* Add padding to sub-buttons */
+    background-color: rgb(99, 0, 0); /* Make background the same as the main button */
+    color: white; /* Text color */
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+    font-family: 'Serif'; /* Match the font style to the navbar name */
+    text-transform: uppercase; /* Ensure consistency */
+    border: 1px solid white; /* Thin white border for sub-buttons */
+    box-shadow: none; /* Ensure no shadow is applied */
 }
 
 .sub-navbar button:hover {
-  background-color: #ddd;
+    background-color: rgb(70, 0, 0); /* Darken the background of sub-buttons on hover */
 }
 
 .content {
-  padding: 20px;
-  background-color: #f9f9f9;
-  margin-top: 20px;
+    padding: 10px;
+    margin-top: 20px;
 }
 
 .content h2 {
-  margin-top: 0;
+    margin-top: 0;
 }
+
+
