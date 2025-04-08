@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Import Link from React Router
 import "./FemalePage.css";
 
 export default function FemalePage() {
@@ -11,11 +12,14 @@ export default function FemalePage() {
             Get Hair Style <br /> You Deserve
           </h1>
           <p>
-            Discover a world of sophistication and personalized beauty at MINERVA.
+            Discover a world of sophistication and personalized beauty at SM SALON.
             Our salon is more than just a place for haircuts; it’s a haven where your
             unique style takes center stage.
           </p>
-          <button className="book-button">Book appointment</button>
+          {/* Book appointment button leading to the booking page */}
+          <Link to="/booking">
+            <button className="book-button">Book appointment</button>
+          </Link>
         </div>
         <img
           src="/hero-image.png"
@@ -30,8 +34,11 @@ export default function FemalePage() {
         <div className="services-grid">
           {['Haircuts', 'Hairstyles', 'Coloring'].map((service) => (
             <div key={service} className="service-card">
-              <img src={`/${service.toLowerCase()}.png`} alt={service} />
-              <h3>{service}</h3>
+              {/* Link each service to its respective page */}
+              <Link to={`/service/${service.toLowerCase()}`}>
+                <img src={`/${service.toLowerCase()}.png`} alt={service} />
+                <h3>{service}</h3>
+              </Link>
             </div>
           ))}
         </div>
