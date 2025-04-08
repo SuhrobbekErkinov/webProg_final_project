@@ -1,5 +1,5 @@
 .female-page {
-    background-color: #f9f5f3;
+    background-color: #e9a3a3;
     color: #2d2d2d;
     font-family: sans-serif;
   }
@@ -9,12 +9,18 @@
     flex-direction: column;
     gap: 2rem;
     padding: 2rem;
-    background: linear-gradient(to right, #fbece9, #f9f5f3);
+    background: linear-gradient(to right, #7c0101, #f30101);
+
+
   }
   
   .hero-text h1 {
+    color: white;
     font-size: 2.5rem;
     font-weight: bold;
+  }
+  .hero-text  {
+    color: white;
   }
   
   .book-button {
