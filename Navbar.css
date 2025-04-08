@@ -1,88 +1,125 @@
+* Navbar */
 .navbar {
-    background-color: rgb(99, 0, 0);
+    background-color: #630000;
     color: white;
-    display: flex;
-    justify-content: flex-start; /* Align items to the left */
-    align-items: center;
-    padding: 0cm 1cm;
-    width: 100%; /* Ensure navbar takes the full width */
+    display: flex; /* Align horizontally */
+    justify-content: space-between; /* Space out title and buttons */
+    align-items: center; /* Center contents vertically */
+    padding: 10px 20px; /* Add consistent padding */
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in width calculations */
+    position: fixed; /* Make navbar fixed to the top of the screen */
+    top: 0; /* Position at the top */
+    z-index: 100; /* Ensure navbar stays above other elements */
+}
+
+/* Ensure there is space for the navbar */
+body {
+    padding-top: 60px; /* Add padding to avoid overlap with fixed navbar */
 }
 
 .navbar h1 {
-    font-family: 'Serif'; /* Apply font similar to the navbar name */
-    text-transform: uppercase; /* Make the font uppercase for consistency */
-    margin-right: 20px; /* Space between the navbar title and the buttons */
+    font-family: 'Serif';
+    text-transform: uppercase;
+    margin: 0; /* Remove unnecessary margins */
+    font-size: 24px; /* Default font size */
 }
 
-.menu {
-    display: flex;
-    gap: 20px; /* Space out the buttons a bit */
+.main-buttons {
+    display: flex; /* Keep buttons horizontal */
+    gap: 10px; /* Space between buttons */
+    margin: 0; /* Reset margins */
 }
 
-.dropdown {
-    position: relative;
-}
-
-button {
+.main-buttons button {
     color: white;
-    padding: 10px 20px; /* Adjust padding for better centering */
-    background-color: rgb(99, 0, 0); /* Transparent background */
+    padding: 10px 15px; /* Adjust padding for better responsiveness */
+    background-color: rgb(99, 0, 0);
+    font-size: 24px; /* Default button size */
+    font-family: 'Serif';
+    text-transform: uppercase;
+    border: none;
     cursor: pointer;
-    font-size: 20px; /* Font size for readability */
-    display: flex;
-    font-family: 'Serif'; /* Apply font similar to the navbar name */
-    text-transform: uppercase; /* Make the font uppercase for consistency */
-    outline: none; /* Remove the blue outline when the button is focused */
-    border: none; /* Remove any borders */
-    box-shadow: none; /* Ensure no shadow is applied */
+    outline: none;
+    box-shadow: none;
 }
 
-button:hover {
-    background-color: rgb(99, 0, 0); /* Darken the background on hover */
+.main-buttons button.active {
+    color: red; /* Active state */
+    font-weight: bold; /* Bold active button */
 }
 
-button.active {
-    color: red; /* Highlight the active button */
-    font-weight: bold;
+.main-buttons button:active {
+    background-color: red; /* Change button color while being clicked */
+    color: white;
 }
 
 .sub-navbar {
-    position: absolute;
-    top: 40px; /* Adjust to position below the main button */
-    background-color: rgb(99, 0, 0); /* Ensure sub-navbar background matches main button */
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: flex; /* Horizontal layout */
+    gap: 10px; /* Space between sub-buttons */
     padding: 10px;
-    min-width: 150px; /* Set a minimum width for the dropdown */
+    background-color: rgb(99, 0, 0);
+    border-radius: 5px;
 }
 
 .sub-navbar button {
-    padding: 5px 20px; /* Add padding to sub-buttons */
-    background-color: rgb(99, 0, 0); /* Make background the same as the main button */
-    color: white; /* Text color */
+    padding: 5px 10px;
+    font-size: 18px; /* Default size for sub-buttons */
+    background-color: rgb(99, 0, 0);
+    color: white;
     cursor: pointer;
-    display: flex;
-    align-items: center; /* Vertically center the text */
-    justify-content: center; /* Horizontally center the text */
-    font-family: 'Serif'; /* Match the font style to the navbar name */
-    text-transform: uppercase; /* Ensure consistency */
-    border: 1px solid white; /* Thin white border for sub-buttons */
-    box-shadow: none; /* Ensure no shadow is applied */
+    font-family: 'Serif';
+    text-transform: lowercase;
+    border: none;
+    box-shadow: none;
 }
 
 .sub-navbar button:hover {
-    background-color: rgb(70, 0, 0); /* Darken the background of sub-buttons on hover */
+    background-color: rgb(70, 0, 0); /* Change sub-button color on hover */
 }
 
-.content {
-    padding: 10px;
-    margin-top: 20px;
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack title and buttons vertically */
+        align-items: flex-start; /* Align items to the left */
+    }
+
+    .navbar h1 {
+        font-size: 20px; /* Reduce font size for smaller screens */
+    }
+
+    .main-buttons {
+        justify-content: center; /* Center buttons for smaller screens */
+        width: 100%;
+        gap: 5px; /* Reduce spacing between buttons */
+    }
+
+    .main-buttons button {
+        font-size: 16px; /* Adjust button font size */
+    }
+
+    .sub-navbar {
+        flex-wrap: wrap; /* Allow wrapping of sub-buttons */
+        justify-content: center; /* Center sub-buttons on smaller screens */
+        gap: 5px; /* Adjust spacing for sub-buttons */
+    }
+
+    .sub-navbar button {
+        font-size: 14px; /* Make sub-buttons smaller */
+    }
 }
 
-.content h2 {
-    margin-top: 0;
+@media screen and (max-width: 480px) {
+    .navbar h1 {
+        font-size: 18px; /* Further reduce font size for very small screens */
+    }
+
+    .main-buttons button {
+        font-size: 14px; /* Make buttons smaller for compact screens */
+    }
+
+    .sub-navbar button {
+        font-size: 12px; /* Reduce sub-button size */
+    }
 }
-
-
