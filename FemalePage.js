@@ -1,4 +1,3 @@
-// FemalePage.js
 import React from "react";
 import "./FemalePage.css";
 
@@ -6,7 +5,7 @@ export default function FemalePage() {
   return (
     <main className="female-page">
       {/* Hero Section */}
-      <section className="hero-section">
+      <section id="hero-section" className="hero-section">
         <div className="hero-text">
           <h1>
             Get Hair Style <br /> You Deserve
@@ -25,8 +24,8 @@ export default function FemalePage() {
         />
       </section>
 
-      {/* Services */}
-      <section className="services-section">
+      {/* Services Section */}
+      <section id="services" className="services-section">
         <h2>Our Services</h2>
         <div className="services-grid">
           {['Haircuts', 'Hairstyles', 'Coloring'].map((service) => (
@@ -39,7 +38,7 @@ export default function FemalePage() {
       </section>
 
       {/* Booking Section */}
-      <section className="booking-section">
+      <section id="booking" className="booking-section">
         <h2>Booking</h2>
         <div className="booking-grid">
           <img src="/booking-image.png" alt="Booking" className="booking-image" />
@@ -58,8 +57,8 @@ export default function FemalePage() {
         </div>
       </section>
 
-      {/* Products */}
-      <section className="products-section">
+      {/* Products Section */}
+      <section id="products" className="products-section">
         <h2>Our Products</h2>
         <div className="products-grid">
           {["Volume Guts 10", "Hot Air Comb", "Repair L’oreal", "Volume Conditioner"].map((product, i) => (
@@ -71,8 +70,8 @@ export default function FemalePage() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="team-section">
+      {/* Team Section */}
+      <section id="team" className="team-section">
         <h2>Our Team</h2>
         <div className="team-grid">
           {["Olivia Smith", "Amelia Brown", "Emily Walker"].map((name, i) => (
@@ -85,8 +84,8 @@ export default function FemalePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
+      {/* Footer Section */}
+      <footer id="contacts" className="footer">
         <div className="footer-content">
           <div>
             <h3>Contact Us</h3>
