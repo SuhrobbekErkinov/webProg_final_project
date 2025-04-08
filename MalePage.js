@@ -1,7 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./MalePage.css";
 
 export default function MalePage() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Function to handle "Book Appointment" button click
+  const handleBookAppointment = () => {
+    navigate("/booking"); // Navigate to the booking page
+  };
+
+  // Function to handle service click
+  const handleServiceClick = (service) => {
+    navigate(`/service/${service.toLowerCase().replace(/ /g, '-')}`); // Navigate to the specific service page
+  };
+
   return (
     <main className="male-page">
       {/* Hero Section */}
@@ -15,10 +28,10 @@ export default function MalePage() {
             Our barbershop is not just a place for haircuts; it’s a sanctuary where
             your individuality is celebrated.
           </p>
-          <button className="book-button">Book appointment</button>
+          <button className="book-button" onClick={handleBookAppointment}>Book appointment</button>
         </div>
         <img
-          src="/male-hero-image.png" // Ensure this image exists in the public folder
+          src="/male-hero-image.png"
           alt="Groomed Man"
           className="hero-image"
         />
@@ -29,7 +42,11 @@ export default function MalePage() {
         <h2>Our Services</h2>
         <div className="services-grid">
           {['Haircuts', 'Beard Trim', 'Shaving'].map((service) => (
-            <div key={service} className="service-card">
+            <div 
+              key={service} 
+              className="service-card"
+              onClick={() => handleServiceClick(service)} // Add click handler
+            >
               <img src={`/${service.toLowerCase().replace(/ /g, '-')}.png`} alt={service} />
               <h3>{service}</h3>
             </div>
@@ -42,7 +59,7 @@ export default function MalePage() {
         <h2>Booking</h2>
         <div className="booking-grid">
           <img
-            src="/male-booking-image.png" // Ensure this image exists in the public folder
+            src="/male-booking-image.png"
             alt="Booking"
             className="booking-image"
           />
@@ -108,3 +125,4 @@ export default function MalePage() {
     </main>
   );
 }
+
