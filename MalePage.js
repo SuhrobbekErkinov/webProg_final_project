@@ -1,56 +1,34 @@
-import React, { useRef } from "react";
-import "./FemalePage.css";
+import React from "react";
+import "./MalePage.css";
 
 export default function MalePage() {
-  const servicesRef = useRef(null);
-  const productsRef = useRef(null);
-
-  const scroll = (direction, section) => {
-    const container = section === "services" ? servicesRef.current : productsRef.current;
-    const scrollAmount = direction === "left" ? -300 : 300;
-    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-  };
-
   return (
     <main className="male-page">
       {/* Hero Section */}
-      <section className="hero-section">
+      <section id="hero-section" className="hero-section">
         <div className="hero-text">
           <h1>
-            Get the Hair Style <br /> You Deserve
+            Discover the Style <br /> You Deserve
           </h1>
           <p>
-            Discover a world of refinement and personalized grooming at MINERVA.
-            Our salon is more than just a place for haircuts; it’s a haven where your
-            unique style and confidence take center stage.
+            Step into a world of sharp grooming and timeless styles at MINERVA.
+            Our barbershop is not just a place for haircuts; it’s a sanctuary where
+            your individuality is celebrated.
           </p>
           <button className="book-button">Book appointment</button>
         </div>
-        <img src="/hero-image.png" alt="Hair Model" className="hero-image" />
+        <img
+          src="/male-hero-image.png" // Ensure this image exists in the public folder
+          alt="Groomed Man"
+          className="hero-image"
+        />
       </section>
 
       {/* Services Section */}
-      <section className="services-section">
-        <div className="section-header">
-          <h2>Our Grooming Services</h2>
-          {/* Scroll buttons near section title */}
-          <div>
-            <button
-              className="scroll-button scroll-left"
-              onClick={() => scroll("left", "services")}
-            >
-              ←
-            </button>
-            <button
-              className="scroll-button scroll-right"
-              onClick={() => scroll("right", "services")}
-            >
-              →
-            </button>
-          </div>
-        </div>
-        <div className="services-grid" ref={servicesRef}>
-          {['Haircuts', 'Styling', 'Beard Trimming'].map((service) => (
+      <section id="services" className="services-section">
+        <h2>Our Services</h2>
+        <div className="services-grid">
+          {['Haircuts', 'Beard Trim', 'Shaving'].map((service) => (
             <div key={service} className="service-card">
               <img src={`/${service.toLowerCase().replace(/ /g, '-')}.png`} alt={service} />
               <h3>{service}</h3>
@@ -59,28 +37,35 @@ export default function MalePage() {
         </div>
       </section>
 
-      {/* Products Section */}
-      <section className="products-section">
-        <div className="section-header">
-          <h2>Our Grooming Products</h2>
-          {/* Scroll buttons near section title */}
-          <div>
-            <button
-              className="scroll-button scroll-left"
-              onClick={() => scroll("left", "products")}
-            >
-              ←
-            </button>
-            <button
-              className="scroll-button scroll-right"
-              onClick={() => scroll("right", "products")}
-            >
-              →
-            </button>
+      {/* Booking Section */}
+      <section id="booking" className="booking-section">
+        <h2>Booking</h2>
+        <div className="booking-grid">
+          <img
+            src="/male-booking-image.png" // Ensure this image exists in the public folder
+            alt="Booking"
+            className="booking-image"
+          />
+          <div className="booking-calendar">
+            <p><strong>Working Days:</strong> 9AM - 9PM</p>
+            <p><strong>Saturday:</strong> 10AM - 8PM</p>
+            <p><strong>Sunday:</strong> Closed</p>
           </div>
+          <form className="booking-form">
+            <input type="text" placeholder="First Name" />
+            <input type="text" placeholder="Last Name" />
+            <input type="tel" placeholder="Phone" />
+            <input type="email" placeholder="Email" />
+            <button className="book-button">Book appointment</button>
+          </form>
         </div>
-        <div className="products-grid" ref={productsRef}>
-          {["Styling Gel", "Hair Comb", "Beard Oil", "Conditioner for Men"].map((product, i) => (
+      </section>
+
+      {/* Products Section */}
+      <section id="products" className="products-section">
+        <h2>Our Products</h2>
+        <div className="products-grid">
+          {["Beard Oil", "Shaving Cream", "Hair Gel", "Pomade"].map((product, i) => (
             <div key={i} className="product-card">
               <img src={`/${product.toLowerCase().replace(/ /g, '-')}.png`} alt={product} />
               <p>{product}</p>
@@ -88,29 +73,12 @@ export default function MalePage() {
           ))}
         </div>
       </section>
-      
-      <section className="why-choose-us-section">
-        <div className="why-choose-us-info">
-          <h2>Why Choose Us?</h2>
-          <p>Here’s why we are the best in the business...</p>
-          <ul>
-            <li>Top-notch quality grooming service</li>
-            <li>Highly experienced barbers and stylists</li>
-            <li>Personalized approach to each client</li>
-          </ul>
-        </div>
 
-        <div className="feedback-box">
-          <h3>Leave Your Feedback</h3>
-          <textarea placeholder="Your feedback..."></textarea>
-          <button className="submit-feedback">Submit</button>
-        </div>
-      </section>
-
-      <section className="team-section">
+      {/* Team Section */}
+      <section id="team" className="team-section">
         <h2>Our Team</h2>
         <div className="team-grid">
-          {["John Doe", "Michael Brown", "David Walker"].map((name, i) => (
+          {["James Johnson", "Liam Davis", "Ethan Wilson"].map((name, i) => (
             <div key={i} className="team-card">
               <img src={`/${name.split(' ')[0].toLowerCase()}.png`} alt={name} />
               <p className="team-name">{name}</p>
@@ -120,8 +88,8 @@ export default function MalePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
+      {/* Footer Section */}
+      <footer id="contacts" className="footer">
         <div className="footer-content">
           <div>
             <h3>Contact Us</h3>
