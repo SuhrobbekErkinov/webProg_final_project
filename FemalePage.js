@@ -1,8 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom"; // Import Link from React Router
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./FemalePage.css";
 
 export default function FemalePage() {
+  const [expandedService, setExpandedService] = useState(null);
+  const [expandedTeamMember, setExpandedTeamMember] = useState(null);
+
+  const handleServiceClick = (service) => {
+    setExpandedService(expandedService === service ? null : service);
+  };
+
+  const handleTeamClick = (member) => {
+    setExpandedTeamMember(expandedTeamMember === member ? null : member);
+  };
+
   return (
     <main className="female-page">
       {/* Hero Section */}
@@ -12,80 +23,110 @@ export default function FemalePage() {
             Get Hair Style <br /> You Deserve
           </h1>
           <p>
-            Discover a world of sophistication and personalized beauty at SM SALON.
-            Our salon is more than just a place for haircuts; it’s a haven where your
-            unique style takes center stage.
+            Discover a world of sophistication and personalized beauty at SM
+            SALON. Our salon is more than just a place for haircuts; it’s a
+            haven where your unique style takes center stage.
           </p>
-          {/* Book appointment button leading to the booking page */}
-          <Link to="/booking">
-            <button className="book-button">Book appointment</button>
-          </Link>
         </div>
-        <img
-          src="/hero-image.png"
-          alt="Hair Model"
-          className="hero-image"
-        />
+        <img src="/hero-image.png" alt="Hair Model" className="hero-image" />
       </section>
 
       {/* Services Section */}
       <section id="services" className="services-section">
         <h2>Our Services</h2>
         <div className="services-grid">
-          {['Haircuts', 'Hairstyles', 'Coloring'].map((service) => (
-            <div key={service} className="service-card">
-              {/* Link each service to its respective page */}
-              <Link to={`/service/${service.toLowerCase()}`}>
-                <img src={`/${service.toLowerCase()}.png`} alt={service} />
-                <h3>{service}</h3>
+          {["Haircuts", "Hairstyles", "Coloring"].map((service) => (
+            <div
+              key={service}
+              className="service-card"
+              onClick={() => handleServiceClick(service)}
+            >
+              <img
+                src={`/${service.toLowerCase().replace(/ /g, "-")}.jpg`}
+                alt={service}
+                className="service-image"
+              />
+              <h3>{service}</h3>
+              {expandedService === service && (
+                <div className="service-details">
+                  <p>
+                    Here you can put detailed information about the {service}.
+                    For example, the price, duration, or any additional info.
+                  </p>
+                </div>
+              )}
+              <Link to="/booking">
+                <button type="button" className="book-button">
+                  Book Appointment
+                </button>
               </Link>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Booking Section */}
-      <section id="booking" className="booking-section">
-        <h2>Booking</h2>
-        <div className="booking-grid">
-          <img src="/booking-image.png" alt="Booking" className="booking-image" />
-          <div className="booking-calendar">
-            <p><strong>Working Days:</strong> 9AM - 9PM</p>
-            <p><strong>Saturday:</strong> 10AM - 8PM</p>
-            <p><strong>Sunday:</strong> Closed</p>
+      {/* Feedback Section */}
+      <section id="feedback" className="female-feedback-section">
+        <h2>Feedback</h2>
+        <div className="feedback-grid">
+          <div className="feedback-image-container">
+            <img
+              src="/feedback-image.png"
+              alt="Feedback"
+              className="feedback-image"
+            />
+            <Link to="/booking">
+              <button type="button" className="book-button">
+                Book Appointment
+              </button>
+            </Link>
           </div>
-          <form className="booking-form">
-            <input type="text" placeholder="First Name" />
-            <input type="text" placeholder="Last Name" />
-            <input type="tel" placeholder="Phone" />
-            <input type="email" placeholder="Email" />
-            <button className="book-button">Book appointment</button>
-          </form>
+          <div className="feedback-form-container">
+            <p>
+              We value your opinion! Please provide us with feedback on your experience.
+            </p>
+            <form className="feedback-form">
+              <input type="text" placeholder="Your Name" />
+              <textarea placeholder="Your Feedback" rows="4"></textarea>
+              <button type="submit" className="feedback-submit-button">
+                Submit Feedback
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 
-      {/* Products Section */}
-      <section id="products" className="products-section">
-        <h2>Our Products</h2>
-        <div className="products-grid">
-          {["Volume Guts 10", "Hot Air Comb", "Repair L’oreal", "Volume Conditioner"].map((product, i) => (
-            <div key={i} className="product-card">
-              <img src={`/${product.toLowerCase().replace(/ /g, '-')}.png`} alt={product} />
-              <p>{product}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Team Section */}
+      {/* Team Section  */}
       <section id="team" className="team-section">
         <h2>Our Team</h2>
         <div className="team-grid">
-          {["Olivia Smith", "Amelia Brown", "Emily Walker"].map((name, i) => (
-            <div key={i} className="team-card">
-              <img src={`/${name.split(' ')[0].toLowerCase()}.png`} alt={name} />
+          {["Emma Watson", "Hande Ercel", "Kim Ji Won", "Selena Gomes", "Son Hye Kyo", "Tyla"].map((name, i) => (
+            <div
+              key={i}
+              className="team-card"
+              onClick={() => handleTeamClick(name)}
+            >
+              <img
+                src={`/${name.split(" ")[0].toLowerCase()}.jpg`}
+                alt={name}
+              />
               <p className="team-name">{name}</p>
               <p className="team-role">Hairdresser</p>
+
+              {expandedTeamMember === name && (
+                <div className="team-details">
+                  <p>
+                    {name} is an experienced stylist specializing in custom
+                    cuts, vibrant coloring, and modern updos. Clients love her
+                    for her attention to detail and creative flair.
+                  </p>
+                  <Link to="/booking">
+                    <button className="book-button team-book-button">
+                      Book appointment
+                    </button>
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>
