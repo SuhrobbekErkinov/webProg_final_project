@@ -1,113 +1,142 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./MalePage.css";
 
 export default function MalePage() {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [expandedService, setExpandedService] = useState(null);
+  const [expandedTeamMember, setExpandedTeamMember] = useState(null);
 
-  // Function to handle "Book Appointment" button click
-  const handleBookAppointment = () => {
-    navigate("/booking"); // Navigate to the booking page
+  const handleServiceClick = (service) => {
+    setExpandedService(expandedService === service ? null : service);
   };
 
-  // Function to handle service click
-  const handleServiceClick = (service) => {
-    navigate(`/service/${service.toLowerCase().replace(/ /g, '-')}`); // Navigate to the specific service page
+  const handleTeamClick = (member) => {
+    setExpandedTeamMember(expandedTeamMember === member ? null : member);
   };
 
   return (
     <main className="male-page">
       {/* Hero Section */}
-      <section id="hero-section" className="hero-section">
-        <div className="hero-text">
+      <section id="hero-section" className="male-hero-section">
+        <div className="male-hero-text">
           <h1>
             Discover the Style <br /> You Deserve
           </h1>
           <p>
-            Step into a world of sharp grooming and timeless styles at MINERVA.
-            Our barbershop is not just a place for haircuts; it’s a sanctuary where
+            Step into a world of sharp grooming and timeless styles at SM BARBERSHOP.
+            Our barbershop is not just a place for haircuts; it's a sanctuary where
             your individuality is celebrated.
           </p>
-          <button className="book-button" onClick={handleBookAppointment}>Book appointment</button>
         </div>
         <img
-          src="/male-hero-image.png"
-          alt="Groomed Man"
-          className="hero-image"
-        />
+          src="/male-hero-image.png" alt="Groomed Man" className="male-hero-image"/>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="services-section">
+      <section id="services" className="male-services-section">
         <h2>Our Services</h2>
-        <div className="services-grid">
-          {['Haircuts', 'Beard Trim', 'Shaving'].map((service) => (
-            <div 
-              key={service} 
-              className="service-card"
-              onClick={() => handleServiceClick(service)} // Add click handler
+        <div className="male-services-grid">
+          {['Male Haircuts', 'Beard Trim', 'Shaving'].map((service) => (
+            <div
+              key={service}
+              className="male-service-card"
+              onClick={() => handleServiceClick(service)}
             >
-              <img src={`/${service.toLowerCase().replace(/ /g, '-')}.png`} alt={service} />
+              <img
+                src={`/${service.toLowerCase().replace(/ /g, '-')}.jpg`}
+                alt={service}
+                className="male-service-image"
+              />
               <h3>{service}</h3>
+              {expandedService === service && (
+                <div className="service-details">
+                  <p>
+                    Here you can put detailed information about the {service}.
+                    For example, the price, duration, or any additional info.
+                  </p>
+                </div>
+              )}
+              <Link to="/booking">
+                <button type="button" className="book-button">
+                  Book Appointment
+                </button>
+              </Link>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Booking Section */}
-      <section id="booking" className="booking-section">
-        <h2>Booking</h2>
-        <div className="booking-grid">
-          <img
-            src="/male-booking-image.png"
-            alt="Booking"
-            className="booking-image"
-          />
-          <div className="booking-calendar">
-            <p><strong>Working Days:</strong> 9AM - 9PM</p>
-            <p><strong>Saturday:</strong> 10AM - 8PM</p>
-            <p><strong>Sunday:</strong> Closed</p>
+      {/* Feedback Section */}
+      <section id="feedback" className="feedback-section">
+        <h2>Feedback</h2>
+        <div className="feedback-grid">
+          <div className="feedback-image-container">
+            <img
+              src="/feedback-image.png"
+              alt="Feedback"
+              className="feedback-image"
+            />
+            <Link to="/booking">
+              <button type="button" className="book-button">
+                Book Appointment
+              </button>
+            </Link>
           </div>
-          <form className="booking-form">
-            <input type="text" placeholder="First Name" />
-            <input type="text" placeholder="Last Name" />
-            <input type="tel" placeholder="Phone" />
-            <input type="email" placeholder="Email" />
-            <button className="book-button">Book appointment</button>
-          </form>
-        </div>
-      </section>
-
-      {/* Products Section */}
-      <section id="products" className="products-section">
-        <h2>Our Products</h2>
-        <div className="products-grid">
-          {["Beard Oil", "Shaving Cream", "Hair Gel", "Pomade"].map((product, i) => (
-            <div key={i} className="product-card">
-              <img src={`/${product.toLowerCase().replace(/ /g, '-')}.png`} alt={product} />
-              <p>{product}</p>
-            </div>
-          ))}
+          <div className="feedback-form-container">
+            <p>
+              We value your opinion! Please provide us with feedback on your experience.
+            </p>
+            <form className="feedback-form">
+              <input type="text" placeholder="Your Name" />
+              <textarea placeholder="Your Feedback" rows="4"></textarea>
+              <button type="submit" className="feedback-submit-button">
+                Submit Feedback
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section id="team" className="team-section">
+      <section id="team" className="male-team-section">
         <h2>Our Team</h2>
-        <div className="team-grid">
-          {["James Johnson", "Liam Davis", "Ethan Wilson"].map((name, i) => (
-            <div key={i} className="team-card">
-              <img src={`/${name.split(' ')[0].toLowerCase()}.png`} alt={name} />
-              <p className="team-name">{name}</p>
-              <p className="team-role">Barber</p>
+        <div className="male-team-grid">
+          {["Will Smith", "Theo James", "Ma Dong-Seok", "Kerem Bursin", "Jonny Depp", "Ji Chang-wook"].map((name, i) => (
+            <div
+              key={i}
+              className="team-card"
+              onClick={() => handleTeamClick(name)}
+            >
+              <img
+                src={`/${name.split(' ')[0].toLowerCase()}.jpg`}
+                alt={name}
+                className="male-team-image"
+              />
+              <p className="male-team-name">{name}</p>
+              <p className="male-team-role">Barber</p>
+
+              {expandedTeamMember === name && (
+                <div className="team-details">
+                  <p>
+                    {name} is an experienced stylist specializing in custom
+                    cuts, vibrant coloring, and modern updos. Clients love him
+                    for his attention to detail and creative flair.
+                  </p>
+                  <Link to="/booking">
+                    <button className="book-button team-book-button">
+                      Book appointment
+                    </button>
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>
       </section>
 
       {/* Footer Section */}
-      <footer id="contacts" className="footer">
-        <div className="footer-content">
+      <footer id="contacts" className="male-footer">
+        <div className="male-footer-content">
           <div>
             <h3>Contact Us</h3>
             <p>(234) 658-7199</p>
@@ -120,7 +149,7 @@ export default function MalePage() {
             <input type="email" placeholder="Email..." />
           </div>
         </div>
-        <p className="footer-note">© MINERVA. All Rights Reserved.</p>
+        <p className="male-footer-note">© MINERVA. All Rights Reserved.</p>
       </footer>
     </main>
   );
