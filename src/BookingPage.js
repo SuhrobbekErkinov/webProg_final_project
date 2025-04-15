@@ -25,10 +25,24 @@ export default function BookingPage() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [serviceTime, setServiceTime] = useState(30);
 
-  const masters = {
-    male: ["James Johnson", "Liam Davis", "Ethan Wilson"],
-    female: ["Olivia Smith", "Amelia Brown", "Emily Walker"]
-  };
+const masters = {
+  male: [
+    "Will Smith",
+    "Theo James",
+    "Ma Dong-Seok",
+    "Johnny Depp",
+    "Ji Chang-wook"
+  ],
+  female: [
+    "Emma Watson",
+    "Hande Ercel",
+    "Kim Ji Won",
+    "Selena Gomez",
+    "Son Hye Kyo",
+    "Tyla"
+  ]
+};
+
 
   // Memoize services object to avoid re-calculating on every render
   const services = useMemo(() => ({
