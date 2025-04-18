@@ -1,0 +1,46 @@
+.booking-page {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.booking-form label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.booking-form select,
+.booking-form input {
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.booking-form button {
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.booking-form button:hover {
+  background-color: black;
+}
+
+/* Calendar styles */
+.react-calendar {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
