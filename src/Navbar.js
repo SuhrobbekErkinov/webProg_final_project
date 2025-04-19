@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
+import React, { useState, useEffect } from "react"; 
+
 
 export default function Navbar() {
   const [activeButton, setActiveButton] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  useEffect(() => {
+    const path = location.pathname.slice(1); // remove the '/'
+    setActiveButton(path);
+  }, [location]);
   
   const isLoggedIn = Boolean(localStorage.getItem("user")); // Check if the user is logged in
 
@@ -49,7 +55,9 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <h1>SM Barbershop</h1>
+      <h1 style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
+  SM Barbershop
+     </h1>
       <div className="main-buttons">
         <button
           className={activeButton === "male" ? "active" : ""}
@@ -67,6 +75,7 @@ export default function Navbar() {
 
       {!hideSubButtons && (
         <div className="sub-navbar">
+          <button onClick={() => navigate("/")}>Home</button>
           <button onClick={() => handleSubButtonClick("services")}>Services</button>
           <button onClick={() => handleSubButtonClick("booking")}>Booking</button>
           <button onClick={() => handleSubButtonClick("team")}>Team</button>
