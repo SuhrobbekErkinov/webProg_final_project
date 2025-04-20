@@ -1,0 +1,125 @@
+/* Navbar */
+.navbar {
+    background-color: #630000;
+    color: white;
+    display: flex; /* Align horizontally */
+    justify-content: space-between; /* Space out title and buttons */
+    align-items: center; /* Center contents vertically */
+    padding: 10px 20px; /* Add consistent padding */
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in width calculations */
+    position: fixed; /* Make navbar fixed to the top of the screen */
+    top: 0; /* Position at the top */
+    z-index: 100; /* Ensure navbar stays above other elements */
+}
+
+/* Ensure there is space for the navbar */
+body {
+    padding-top: 60px; /* Add padding to avoid overlap with fixed navbar */
+}
+
+.navbar h1 {
+    font-family: 'Serif';
+    text-transform: uppercase;
+    margin: 0; /* Remove unnecessary margins */
+    font-size: 24px; /* Default font size */
+}
+
+.main-buttons {
+    display: flex; /* Keep buttons horizontal */
+    gap: 10px; /* Space between buttons */
+    margin: 0; /* Reset margins */
+}
+
+.main-buttons button {
+    color: white;
+    padding: 10px 15px; /* Adjust padding for better responsiveness */
+    background-color: rgb(99, 0, 0);
+    font-size: 24px; /* Default button size */
+    font-family: 'Serif';
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+}
+
+.main-buttons button.active {
+    color: red; /* Active state */
+    font-weight: bold; /* Bold active button */
+}
+
+.main-buttons button:active {
+    background-color: red; /* Change button color while being clicked */
+    color: white;
+}
+
+.sub-navbar {
+    display: flex; /* Horizontal layout */
+    gap: 10px; /* Space between sub-buttons */
+    padding: 10px;
+    background-color: rgb(99, 0, 0);
+    border-radius: 5px;
+}
+
+.sub-navbar button {
+    padding: 5px 10px;
+    font-size: 18px; /* Default size for sub-buttons */
+    background-color: rgb(99, 0, 0);
+    color: white;
+    cursor: pointer;
+    font-family: 'Serif';
+    text-transform: lowercase;
+    border: none;
+    box-shadow: none;
+}
+
+.sub-navbar button:hover {
+    background-color: rgb(70, 0, 0); /* Change sub-button color on hover */
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack title and buttons vertically */
+        align-items: flex-start; /* Align items to the left */
+    }
+
+    .navbar h1 {
+        font-size: 20px; /* Reduce font size for smaller screens */
+    }
+
+    .main-buttons {
+        justify-content: center; /* Center buttons for smaller screens */
+        width: 100%;
+        gap: 5px; /* Reduce spacing between buttons */
+    }
+
+    .main-buttons button {
+        font-size: 16px; /* Adjust button font size */
+    }
+
+    .sub-navbar {
+        flex-wrap: wrap; /* Allow wrapping of sub-buttons */
+        justify-content: center; /* Center sub-buttons on smaller screens */
+        gap: 5px; /* Adjust spacing for sub-buttons */
+    }
+
+    .sub-navbar button {
+        font-size: 14px; /* Make sub-buttons smaller */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar h1 {
+        font-size: 18px; /* Further reduce font size for very small screens */
+    }
+
+    .main-buttons button {
+        font-size: 14px; /* Make buttons smaller for compact screens */
+    }
+
+    .sub-navbar button {
+        font-size: 12px; /* Reduce sub-button size */
+    }
+}
