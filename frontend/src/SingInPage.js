@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "../src/axiousInstance";
 //import { FcGoogle } from "react-icons/fc";
 import "./SignInPage.css";
 
@@ -29,7 +30,7 @@ export default function SignInPage() {
   const validateEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
     const trimmedEmail = email.trim();
@@ -58,18 +59,35 @@ export default function SignInPage() {
     }
 
     const userData = isLogin
-      ? { email: trimmedEmail, password: trimmedPassword }
-      : {
-          firstName: firstName.trim(),
-          lastName: lastName.trim(),
+        ? { email: trimmedEmail, password: trimmedPassword }
+        : {
+          firstname: firstName.trim(), // Match with backend DTO
+          lastname: lastName.trim(),
           email: trimmedEmail,
           password: trimmedPassword,
         };
 
-    console.log(isLogin ? "Login data:" : "Sign up data:", userData);
-    alert(isLogin ? "Signed in successfully!" : "Account created successfully!");
-    navigate(from);
+    try {
+      const endpoint = isLogin
+          ? "http://localhost:8080/api/auth/login"
+          : "http://localhost:8080/api/auth/register";
+
+      const response = await axios.post(endpoint, userData);
+      console.log("Success:", response.data);
+
+      alert(isLogin ? "Logged in successfully!" : "Account created successfully!");
+
+      // Optionally: store user info
+      // localStorage.setItem("user", JSON.stringify(response.data));
+
+      navigate(from);
+    } catch (error) {
+      const message = error.response?.data?.message || "Authentication failed.";
+      console.error("Auth Error:", message);
+      alert(message);
+    }
   };
+
 
   const handleCancel = () => {
     navigate(from);
