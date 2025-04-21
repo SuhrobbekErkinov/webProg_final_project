@@ -107,87 +107,109 @@
 }
 
 /* ================== SERVICES ================== */
+
 .services-section {
-  padding: 40px 20px;
-  text-align: center;
+  padding: 20px;
+}
+
+.scroll-container {
+  margin-bottom: 40px;
 }
 
 .service-cards {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  overflow-x: auto;
   gap: 20px;
 }
 
 .service-card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 250px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.service-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
+  flex: 0 0 auto;
+  width: 300px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  background-color: #f9f9f9;
   border-radius: 10px;
-  margin-bottom: 12px;
 }
+
+.service-img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+}
+
+.male-scroll::-webkit-scrollbar,
+.female-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.male-scroll::-webkit-scrollbar-thumb,
+.female-scroll::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.male-scroll:hover,
+.female-scroll:hover {
+  scrollbar-color: #555 #f9f9f9;
+}
+
 
 
 /* ================== MASTERS SECTION ================== */
 .masters-section {
-  text-align: center;
+  padding: 20px;
 }
 
-.master-cards {
-  display: flex; /* Horizontal layout */
-  flex-direction: column; /* Align cards one below the other */
-  gap: 8px; /* Add spacing between cards */
-  width: 90%; /* Full width of the page */
-  margin: 0 auto; /* Center cards on the page */
+.columns {
+  display: flex;
+  gap: 20px;
+}
+
+.female-column,
+.male-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .master-card {
-  display: flex; /* Horizontal alignment for content */
-  align-items: center; /* Vertically align content */
-  justify-content: space-between; /* Space out photo, name, and rating */
-  width: 100%; /* Full width */
-  background: #fff;
-  border: none;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  text-align: left;
-  gap: 20px; /* Space between photo, name, and rating */
-  transition: transform 0.2s ease-in-out;
-}
-
-.master-card:hover {
-  transform: scale(1.02); /* Hover effect */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
 }
 
 .master-img {
-  width: 120px; /* Fixed size for the photo */
-  height: 120px;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 50%;
+  margin-right: 15px;
 }
 
 .master-name {
-  flex: 1; /* Name takes available space */
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+  flex: 1;
   text-align: center;
+  font-weight: bold;
 }
 
 .master-rating {
-  font-size: 16px;
-  font-weight: 500;
-  color: #ff3366;
+  color: #f39c12;
+  font-size: 1rem;
+  margin-left: 15px;
 }
+.master-rating span {
+  font-size: 1.2rem;
+  margin: 0 2px;
+}
+
+
 
 /* ================== FEEDBACK SECTION ================== */
 .feedback-section {
@@ -265,3 +287,4 @@
   padding: 30px 20px;
   text-align: center;
 }
+
