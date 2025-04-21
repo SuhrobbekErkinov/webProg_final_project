@@ -29,30 +29,55 @@ const salons = [
   
 
 const services = [
-      { id: 1, name: "Hairstyles", description: "Professional haircut for men.", price: "$30" },
-      { id: 2, name: "Beard Trim", description: "Precision beard trimming.", price: "$15" },
-      { id: 3, name: "Shaving", description: "Classic straight razor shave.", price: "$20" },
-      { id: 5, name: "Haircut", description: "Stylish haircut for women.", price: "$40" },
-      { id: 6, name: "Coloring", description: "Custom hair coloring and highlights.", price: "$80" },
-      { id: 8, name: "Hair Treatments", description: "Blow dry and style.", price: "$25" },
-    ];
+  { id: 1, name: "Hairstyles", description: "Professional haircut for women.", price: "$50", gender: "female" },
+  { id: 2, name: "Beard Trim", description: "Precision beard trimming.", price: "$15", gender: "male" },
+  { id: 3, name: "Shaving", description: "Classic straight razor shave.", price: "$20", gender: "male" },
+  { id: 5, name: "Haircut", description: "Stylish haircut for women.", price: "$40", gender: "female" },
+  { id: 6, name: "Coloring", description: "Custom hair coloring and highlights.", price: "$80", gender: "female" },
+  { id: 8, name: "Hair Treatments", description: "Blow dry and style.", price: "$25", gender: "female" },
+  { id: 9, name: "Haircuts", description: "Professional haircut for men.", price: "$30", gender: "male" },
+];
+
+const maleServices = services.filter(service => service.gender === "male");
+const femaleServices = services.filter(service => service.gender === "female");
+
   
 
-  const masters = [
-    { id: 1, name: "Will Smith", specialization: "Stylist" },
-    { id: 2, name: "Theo James", specialization: "Beard Specialist" },
-    { id: 3, name: "Ma Dong Seok", specialization: "Scissor Cut Master" },
-    { id: 4, name: "Kerem Bursin", specialization: "Modern Styles" },
-    { id: 5, name: "Johnny Depp", specialization: "Color Artist" },
-    { id: 6, name: "Ji Chang Wook", specialization: "Quick Styling" },
-    { id: 7, name: "Emma Watson", specialization: "Model Stylist" },
-    { id: 8, name: "Hande Ercel", specialization: "Fashion Cuts" },
-    { id: 9, name: "Kim Ji Won", specialization: "Elegant Styles" },
-    { id: 10, name: "Selena Gomez", specialization: "Celebrity Looks" },
-    { id: 11, name: "Son Hye Kyo", specialization: "Premium Stylist" },
-    { id: 12, name: "Tyla", specialization: "Trend Expert" }
-  ];
-  
+const masters = [
+  { id: 1, name: "Will Smith", specialization: "Stylist", gender: "male", rating: 4.8 },
+  { id: 2, name: "Theo James", specialization: "Beard Specialist", gender: "male", rating: 1.7 },
+  { id: 3, name: "Ma Dong Seok", specialization: "Scissor Cut Master", gender: "male", rating: 4.9 },
+  { id: 4, name: "Kerem Bursin", specialization: "Modern Styles", gender: "male", rating: 1.6 },
+  { id: 5, name: "Johnny Depp", specialization: "Color Artist", gender: "male", rating: 4.7 },
+  { id: 6, name: "Ji Chang Wook", specialization: "Quick Styling", gender: "male", rating: 2.5 },
+  { id: 7, name: "Emma Watson", specialization: "Model Stylist", gender: "female", rating: 3.9 },
+  { id: 8, name: "Hande Ercel", specialization: "Fashion Cuts", gender: "female", rating: 4.8 },
+  { id: 9, name: "Kim Ji Won", specialization: "Elegant Styles", gender: "female", rating: 2.7 },
+  { id: 10, name: "Selena Gomez", specialization: "Celebrity Looks", gender: "female", rating: 4.9 },
+  { id: 11, name: "Son Hye Kyo", specialization: "Premium Stylist", gender: "female", rating: 3.6 },
+  { id: 12, name: "Tyla", specialization: "Trend Expert", gender: "female", rating: 4.8 },
+];
+
+
+const sortedMaleMasters = masters
+  .filter(master => master.gender === "male")
+  .sort((a, b) => b.rating - a.rating);
+
+const sortedFemaleMasters = masters
+  .filter(master => master.gender === "female")
+  .sort((a, b) => b.rating - a.rating);
+
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span key={i} style={{ color: i <= Math.round(rating) ? "#f39c12" : "#ddd" }}>
+          ★
+        </span>
+      );
+    }
+    return stars;
+  };
   
 
   const MainPage = () => {
@@ -104,49 +129,84 @@ const services = [
   </div>
 </section>
 
-{/* Services Section */}
 <section id="services" className="services-section">
   <h2>Our Services</h2>
-  <div className="service-cards">
-    {services.map((service) => (
-      <div key={service.id} className="service-card">
-        {/* Dynamically load image just like master */}
-        <img
-          src={`/${service.name.replace(/\s+/g, '').toLowerCase()}.jpg`}
-          alt={service.name}
-          className="service-img"
-        />
-        <h3>{service.name}</h3>
-        <p>{service.description}</p>
-        <span>{service.price}</span>
-      </div>
-    ))}
+
+  <div className="scroll-container">
+    <h3>Male Services</h3>
+    <div className="service-cards male-scroll">
+      {maleServices.map((service) => (
+        <div key={service.id} className="service-card">
+          <img
+            src={`/${service.name.replace(/\s+/g, '').toLowerCase()}.jpg`}
+            alt={service.name}
+            className="service-img"
+          />
+          <h3>{service.name}</h3>
+          <p>{service.description}</p>
+          <span>{service.price}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div className="scroll-container">
+    <h3>Female Services</h3>
+    <div className="service-cards female-scroll">
+      {femaleServices.map((service) => (
+        <div key={service.id} className="service-card">
+          <img
+            src={`/${service.name.replace(/\s+/g, '').toLowerCase()}.jpg`}
+            alt={service.name}
+            className="service-img"
+          />
+          <h3>{service.name}</h3>
+          <p>{service.description}</p>
+          <span>{service.price}</span>
+        </div>
+      ))}
+    </div>
   </div>
 </section>
+
 
 
 {/* Masters Section */}
 <section id="masters" className="masters-section">
   <h2>Our Team</h2>
-  <div className="master-cards">
-    {masters.map((master) => (
-      <div key={master.id} className="master-card">
-        {/* Left: Photo */}
-        <img
-        src={`/${master.name.replace(/\s+/g, '').toLowerCase()}.jpg`}
-        alt={master.name}
-        className="master-img"
-        />
+  <div className="columns">
+    <div className="female-column">
+      <h3>Female Masters</h3>
+      {sortedFemaleMasters.map((master) => (
+        <div key={master.id} className="master-card">
+          <img
+            src={`/${master.name.replace(/\s+/g, '').toLowerCase()}.jpg`}
+            alt={master.name}
+            className="master-img"
+          />
+          <div className="master-name">{master.name}</div>
+          <div className="master-rating">{renderStars(master.rating)} ({master.rating})</div>
+        </div>
+      ))}
+    </div>
 
-        {/* Center: Name */}
-        <div className="master-name">{master.name}</div>
-        
-        {/* Right: Rating */}
-        <div className="master-rating">Rating: ★★★★★</div>
-      </div>
-    ))}
+    <div className="male-column">
+      <h3>Male Masters</h3>
+      {sortedMaleMasters.map((master) => (
+        <div key={master.id} className="master-card">
+          <img
+            src={`/${master.name.replace(/\s+/g, '').toLowerCase()}.jpg`}
+            alt={master.name}
+            className="master-img"
+          />
+          <div className="master-name">{master.name}</div>
+          <div className="master-rating">{renderStars(master.rating)} ({master.rating})</div>
+        </div>
+      ))}
+    </div>
   </div>
 </section>
+
 
 
 {/* Feedback Section */}
