@@ -56,7 +56,9 @@ const services = [
   
 
   const MainPage = () => {
-    const [selectedSalon, setSelectedSalon] = useState(salons[0]); // Default to first salon
+    const [selectedSalon, setSelectedSalon] = useState(salons[0]);
+     // Default to first salon
+     const navigate = useNavigate();
   
   return (
     <div className="main-container">
@@ -127,26 +129,26 @@ const services = [
 
 {/* Masters Section */}
 <section id="masters" className="masters-section">
-  <h2>Our Team</h2>
+  <h2>Our Masters</h2>
   <div className="master-cards">
-    {masters.map((master) => (
-      <div key={master.id} className="master-card">
-        {/* Left: Photo */}
+    {masters.concat(masters).map((master) => ( // Duplicate the list to simulate infinite loop
+      <div key={master.id} className="master-card" onClick={() => navigate(`/masters/${master.id}`)}>
         <img
-        src={`/${master.name.replace(/\s+/g, '').toLowerCase()}.jpg`}
-        alt={master.name}
-        className="master-img"
+          src={`/${master.name.replace(/\s+/g, '').toLowerCase()}.jpg`}
+          alt={master.name}
+          className="master-img"
         />
-
-        {/* Center: Name */}
         <div className="master-name">{master.name}</div>
-        
-        {/* Right: Rating */}
-        <div className="master-rating">Rating: ★★★★★</div>
+        <div className="master-rating">{master.specialization}</div>
       </div>
     ))}
   </div>
 </section>
+
+
+
+
+
 
 
 {/* Feedback Section */}

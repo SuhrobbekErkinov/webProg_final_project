@@ -137,57 +137,84 @@
 
 /* ================== MASTERS SECTION ================== */
 .masters-section {
+  padding: 40px 20px;
   text-align: center;
+  overflow: hidden; /* Hide overflow to prevent scrollbars */
 }
 
 .master-cards {
-  display: flex; /* Horizontal layout */
-  flex-direction: column; /* Align cards one below the other */
-  gap: 8px; /* Add spacing between cards */
-  width: 90%; /* Full width of the page */
-  margin: 0 auto; /* Center cards on the page */
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+  width: 100%;
+  animation: scroll-cards 20s linear infinite; /* Continuous scroll animation */
+}
+
+@keyframes scroll-cards {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%); /* Move to 100% width of the container */
+  }
+}
+
+.master-cards:hover {
+  animation-play-state: paused; /* Pause animation on hover */
+}
+
+.master-cards::-webkit-scrollbar {
+  height: 8px;
+}
+
+.master-cards::-webkit-scrollbar-thumb {
+  background: #b72424;
+  border-radius: 6px;
 }
 
 .master-card {
-  display: flex; /* Horizontal alignment for content */
-  align-items: center; /* Vertically align content */
-  justify-content: space-between; /* Space out photo, name, and rating */
-  width: 100%; /* Full width */
+  flex: 0 0 auto;
+  width: 200px;
+  scroll-snap-align: start;
   background: #fff;
   border: none;
   padding: 16px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  text-align: left;
-  gap: 20px; /* Space between photo, name, and rating */
+  text-align: center;
   transition: transform 0.2s ease-in-out;
 }
 
 .master-card:hover {
-  transform: scale(1.02); /* Hover effect */
+  transform: scale(1.05);
 }
 
 .master-img {
-  width: 120px; /* Fixed size for the photo */
-  height: 120px;
+  width: 100%;
+  height: 180px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
+  margin-bottom: 12px;
 }
 
 .master-name {
-  flex: 1; /* Name takes available space */
   font-size: 18px;
   font-weight: bold;
   color: #333;
-  text-align: center;
 }
 
 .master-rating {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #ff3366;
 }
+
+
+
+
+
 
 /* ================== FEEDBACK SECTION ================== */
 .feedback-section {
