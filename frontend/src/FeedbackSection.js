@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
-import axiosInstance from "./axiousInstance"; // adjust path if needed
+import React, { useEffect, useState } from 'react';
+import axiosInstance from "./axiousInstance";
+import FeedbackCard from "./FeedbackCard";
 
-const FeedbackSection = ({ masters, services }) => {
+const FeedbackSection = ({ masters = [], services = [] }) => {
     const [masterName, setMasterName] = useState('');
     const [serviceName, setServiceName] = useState('');
     const [userName, setUserName] = useState('');
     const [feedbackText, setFeedbackText] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [feedbackList, setFeedbackList] = useState([]);
+
+    useEffect(() => {
+        fetchFeedbacks();
+    }, []);
+
+    const fetchFeedbacks = async () => {
+        try {
+            const response = await axiosInstance.get("/feedback", {
+                baseURL: "http://localhost:8080/api"
+            });
+            setFeedbackList(response.data.reverse());
+        } catch (err) {
+            console.error("Error loading feedbacks", err);
+        }
+    };
 
     const handleSubmit = async () => {
         if (!masterName || !serviceName || !userName || !feedbackText) {
@@ -20,11 +37,9 @@ const FeedbackSection = ({ masters, services }) => {
         setMessage('');
 
         try {
-            const response = await axiosInstance.post(
-                "/feedback",  // this overrides /api/auth from baseURL
-                feedback,
-                { baseURL: "http://localhost:8080/api" } // temporarily change baseURL
-            );
+            const response = await axiosInstance.post("/feedback", feedback, {
+                baseURL: "http://localhost:8080/api"
+            });
 
             if (response.status === 200) {
                 setMessage("✅ Feedback submitted successfully!");
@@ -32,6 +47,7 @@ const FeedbackSection = ({ masters, services }) => {
                 setServiceName('');
                 setUserName('');
                 setFeedbackText('');
+                fetchFeedbacks(); // refresh list
             } else {
                 setMessage("❌ Failed to submit feedback. Try again.");
             }
@@ -45,11 +61,13 @@ const FeedbackSection = ({ masters, services }) => {
 
     return (
         <section id="feedback" className="feedback-section">
-            <h2>Feedback</h2>
+            <h2 className="text-center mb-4">Feedback</h2>
+
             <div className="feedback-container">
                 <div className="feedback-image">
                     <img src="/poster1.jpg" alt="Salon" />
                 </div>
+
                 <div className="feedback-form">
                     <label>Choose Master:</label>
                     <select value={masterName} onChange={(e) => setMasterName(e.target.value)}>
@@ -82,13 +100,37 @@ const FeedbackSection = ({ masters, services }) => {
                         onChange={(e) => setFeedbackText(e.target.value)}
                     ></textarea>
 
-                    <button className="submit-feedback" onClick={handleSubmit} disabled={loading}>
+                    <button
+                        className="submit-feedback"
+                        onClick={handleSubmit}
+                        disabled={loading}
+                    >
                         {loading ? "Submitting..." : "Submit Feedback"}
                     </button>
 
-                    {message && <p style={{ marginTop: '10px', color: message.startsWith("✅") ? "green" : "red" }}>{message}</p>}
+                    {message && (
+                        <p style={{ color: message.startsWith("✅") ? "green" : "red", marginTop: '6px' }}>
+                            {message}
+                        </p>
+                    )}
                 </div>
             </div>
+
+            {feedbackList.length > 0 && (
+                <div className="mt-5">
+                    <h3 className="text-center mb-3">What People Are Saying</h3>
+                    <div className="master-cards">
+                        {feedbackList.map((fb) => (
+                            <FeedbackCard
+                                key={fb.id}
+                                feedback={fb.feedbackText}
+                                author={fb.userName}
+                                date={fb.createdAt}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </section>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import './MainPage.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import FeedbackSection from "./FeedbackSection";
 
 
 
@@ -152,39 +152,7 @@ const services = [
 
 
 {/* Feedback Section */}
-<section id="feedback" className="feedback-section">
-  <h2>Feedback</h2>
-  <div className="feedback-container">
-    <div className="feedback-image">
-      <img src="/poster1.jpg" alt="Salon" />
-      </div>
-    <div className="feedback-form">
-      <label>Choose Master:</label>
-      <select>
-        <option>Select Master</option>
-        {masters.map(master => (
-          <option key={master.id}>{master.name}</option>
-        ))}
-      </select>
-
-      <label>Choose Service:</label>
-      <select>
-        <option>Select Service</option>
-        {services.map(service => (
-          <option key={service.id}>{service.name}</option>
-        ))}
-      </select>
-
-      <label>Your Name:</label>
-      <input type="text" placeholder="Your Name" />
-
-      <label>Your Feedback:</label>
-      <textarea placeholder="Your Feedback"></textarea>
-      <button className="submit-feedback">Submit Feedback</button>
-    </div>
-  </div>
-</section>
-
+<FeedbackSection masters={masters} services={services}/>
       {/* Footer Section */}
       <footer id="footer" className="footer-section">
         <h3>Contact Us</h3>

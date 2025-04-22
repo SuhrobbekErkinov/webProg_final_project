@@ -1,25 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../src/axiousInstance";
-//import { FcGoogle } from "react-icons/fc";
 import "./SignInPage.css";
-
-// Firebase config
-//import { auth, provider } from "../firebase"; // You'll create this file
-import { signInWithPopup } from "firebase/auth";
 
 export default function SignInPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const emailRef = useRef(null);
   const from = location.state?.from?.pathname || "/booking";
+  const emailRef = useRef(null);
 
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
 
@@ -27,44 +24,42 @@ export default function SignInPage() {
     emailRef.current?.focus();
   }, [isLogin]);
 
-  const validateEmail = (email) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setForm((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const validateForm = () => {
     const newErrors = {};
-    const trimmedEmail = email.trim();
-    const trimmedPassword = password.trim();
+    const { firstName, lastName, email, password, confirmPassword } = form;
 
-    if (!validateEmail(trimmedEmail)) {
-      newErrors.email = "Enter a valid email address";
-    }
-
-    if (!trimmedPassword || trimmedPassword.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
+    if (!validateEmail(email.trim())) newErrors.email = "Enter a valid email address";
+    if (password.trim().length < 6) newErrors.password = "Password must be at least 6 characters";
 
     if (!isLogin) {
       if (!firstName.trim()) newErrors.firstName = "First name is required";
       if (!lastName.trim()) newErrors.lastName = "Last name is required";
       if (!confirmPassword.trim()) newErrors.confirmPassword = "Please confirm your password";
-      if (trimmedPassword !== confirmPassword.trim()) {
-        newErrors.confirmPassword = "Passwords do not match";
-      }
+      if (password.trim() !== confirmPassword.trim()) newErrors.confirmPassword = "Passwords do not match";
     }
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
 
     const userData = isLogin
-        ? { email: trimmedEmail, password: trimmedPassword }
+        ? { email: form.email.trim(), password: form.password.trim() }
         : {
-          firstname: firstName.trim(), // Match with backend DTO
-          lastname: lastName.trim(),
-          email: trimmedEmail,
-          password: trimmedPassword,
+          firstname: form.firstName.trim(),
+          lastname: form.lastName.trim(),
+          email: form.email.trim(),
+          password: form.password.trim()
         };
 
     try {
@@ -75,11 +70,10 @@ export default function SignInPage() {
       const response = await axios.post(endpoint, userData);
       console.log("Success:", response.data);
 
+      // Save user data to localStorage after successful login/registration
+      localStorage.setItem("user", JSON.stringify(response.data));
+
       alert(isLogin ? "Logged in successfully!" : "Account created successfully!");
-
-      // Optionally: store user info
-      // localStorage.setItem("user", JSON.stringify(response.data));
-
       navigate(from);
     } catch (error) {
       const message = error.response?.data?.message || "Authentication failed.";
@@ -88,154 +82,137 @@ export default function SignInPage() {
     }
   };
 
-
-  const handleCancel = () => {
-    navigate(from);
-  };
+  const handleCancel = () => navigate(from);
 
   const toggleForm = () => {
-    setIsLogin(!isLogin);
+    setIsLogin((prev) => !prev);
+    setForm({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    });
     setErrors({});
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
   };
 
-  // const handleGoogleSignIn = () => {
-  //   signInWithPopup(auth, provider)
-  //     .then((result) => {
-  //       const name = result.user.displayName;
-  //       const email = result.user.email;
-  //       console.log("Google Sign-In success:", { name, email });
-  //       alert("Signed in with Google!");
-  //       navigate(from);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Google Sign-In error:", error);
-  //       alert("Google Sign-In failed. Try again.");
-  //     });
-  // };
-
   return (
-    <div className="signin-page">
-      <div className="signin-container">
-        <h1>{isLogin ? "Sign In" : "Create Account"}</h1>
-        <p className="signin-subtitle">
-          {isLogin
-            ? "Access your MINERVA account below."
-            : "Join MINERVA by filling out the form below."}
-        </p>
+      <div className="signin-page">
+        <div className="signin-container">
+          <h1>{isLogin ? "Sign In" : "Create Account"}</h1>
+          <p className="signin-subtitle">
+            {isLogin
+                ? "Access your MINERVA account below."
+                : "Join MINERVA by filling out the form below."}
+          </p>
 
-        <form onSubmit={handleSubmit} className="signin-form">
-          <div className="form-section">
-            {!isLogin && (
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="firstName">First Name:</label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className={errors.firstName ? "error" : ""}
-                  />
-                  {errors.firstName && <span className="error-message">{errors.firstName}</span>}
-                </div>
+          <form onSubmit={handleSubmit} className="signin-form">
+            <div className="form-section">
+              {!isLogin && (
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="firstName">First Name:</label>
+                      <input
+                          id="firstName"
+                          type="text"
+                          value={form.firstName}
+                          onChange={handleChange}
+                          className={errors.firstName ? "error" : ""}
+                      />
+                      {errors.firstName && <span className="error-message">{errors.firstName}</span>}
+                    </div>
 
-                <div className="form-group">
-                  <label htmlFor="lastName">Last Name:</label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className={errors.lastName ? "error" : ""}
-                  />
-                  {errors.lastName && <span className="error-message">{errors.lastName}</span>}
-                </div>
-              </div>
-            )}
+                    <div className="form-group">
+                      <label htmlFor="lastName">Last Name:</label>
+                      <input
+                          id="lastName"
+                          type="text"
+                          value={form.lastName}
+                          onChange={handleChange}
+                          className={errors.lastName ? "error" : ""}
+                      />
+                      {errors.lastName && <span className="error-message">{errors.lastName}</span>}
+                    </div>
+                  </div>
+              )}
 
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                id="email"
-                ref={emailRef}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={errors.email ? "error" : ""}
-              />
-              {errors.email && <span className="error-message">{errors.email}</span>}
-            </div>
-
-            <div className="form-group password-group">
-              <label htmlFor="password">Password:</label>
-              <div className="password-wrapper">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className={errors.password ? "error" : ""}
-                />
-                <button
-                  type="button"
-                  className="toggle-password"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </button>
-              </div>
-              {errors.password && <span className="error-message">{errors.password}</span>}
-            </div>
-
-            {!isLogin && (
               <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm Password:</label>
+                <label htmlFor="email">Email:</label>
                 <input
-                  type="password"
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={errors.confirmPassword ? "error" : ""}
+                    id="email"
+                    type="email"
+                    ref={emailRef}
+                    value={form.email}
+                    onChange={handleChange}
+                    className={errors.email ? "error" : ""}
                 />
-                {errors.confirmPassword && (
-                  <span className="error-message">{errors.confirmPassword}</span>
-                )}
+                {errors.email && <span className="error-message">{errors.email}</span>}
               </div>
-            )}
-          </div>
 
-          <div className="toggle-form">
-            <p>
-              {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-              <button type="button" onClick={toggleForm} className="toggle-button">
-                {isLogin ? "Sign Up" : "Sign In"}
+              <div className="form-group password-group">
+                <label htmlFor="password">Password:</label>
+                <div className="password-wrapper">
+                  <input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      value={form.password}
+                      onChange={handleChange}
+                      className={errors.password ? "error" : ""}
+                  />
+                  <button
+                      type="button"
+                      className="toggle-password"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+                {errors.password && <span className="error-message">{errors.password}</span>}
+              </div>
+
+              {!isLogin && (
+                  <div className="form-group">
+                    <label htmlFor="confirmPassword">Confirm Password:</label>
+                    <input
+                        id="confirmPassword"
+                        type="password"
+                        value={form.confirmPassword}
+                        onChange={handleChange}
+                        className={errors.confirmPassword ? "error" : ""}
+                    />
+                    {errors.confirmPassword && (
+                        <span className="error-message">{errors.confirmPassword}</span>
+                    )}
+                  </div>
+              )}
+            </div>
+
+            <div className="toggle-form">
+              <p>
+                {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+                <button type="button" onClick={toggleForm} className="toggle-button">
+                  {isLogin ? "Sign Up" : "Sign In"}
+                </button>
+              </p>
+            </div>
+
+            <div className="form-actions">
+              <button type="button" className="cancel-button" onClick={handleCancel}>
+                Cancel
               </button>
-            </p>
-          </div>
+              <button type="submit" className="confirm-button">
+                {isLogin ? "Sign In" : "Create Account"}
+              </button>
+            </div>
 
-          <div className="form-actions">
-            <button type="button" className="cancel-button" onClick={handleCancel}>
-              Cancel
-            </button>
-            <button type="submit" className="confirm-button">
-              {isLogin ? "Sign In" : "Create Account"}
-            </button>
-          </div>
+            <div className="or-divider">OR</div>
 
-          <div className="or-divider">OR</div>
-
-          {/* <button type="button" className="google-button" onClick={handleGoogleSignIn}>
+            {/* Uncomment and add Google sign-in if needed */}
+            {/* <button type="button" className="google-button" onClick={handleGoogleSignIn}>
             <FcGoogle size={20} /> Continue with Google
           </button> */}
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
   );
 }
-
-

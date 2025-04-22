@@ -16,7 +16,21 @@ export default function Navbar() {
     }
 
     if (id === "signin" && !isLoggedIn) {
+      // Navigate to sign in page if not logged in
       navigate("/signin", { state: { from: location } });
+      return;
+    }
+
+    if (id === "signin" && isLoggedIn) {
+      // Log out if the user is logged in
+      localStorage.removeItem("user");
+      navigate("/signin");  // Redirect to signin page after logout
+      return;
+    }
+
+    if (id === "profile" && isLoggedIn) {
+      // Navigate to the profile page if logged in
+      navigate("/userProfile");
       return;
     }
 
@@ -34,20 +48,30 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar">
-      <h1 style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
-        SM Barbershop
-      </h1>
+      <nav className="navbar">
+        <h1 style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
+          SM Barbershop
+        </h1>
 
-      <div className="sub-navbar">
-        <button onClick={() => handleSubButtonClick("services")}>Services</button>
-        <button onClick={() => handleSubButtonClick("booking")}>Booking</button>
-        <button onClick={() => handleSubButtonClick("team")}>Team</button>
-        <button onClick={() => handleSubButtonClick("footer")}>Contacts</button>
-        <button onClick={() => handleSubButtonClick("signin")}>Sign in / Log in</button>
-      </div>
-    </nav>
+        <div className="sub-navbar">
+          <button onClick={() => handleSubButtonClick("services")}>Services</button>
+          <button onClick={() => handleSubButtonClick("booking")}>Booking</button>
+          <button onClick={() => handleSubButtonClick("team")}>Team</button>
+          <button onClick={() => handleSubButtonClick("footer")}>Contacts</button>
+
+          {/* Conditionally render the button based on login status */}
+          {isLoggedIn ? (
+              // If logged in, show "Profile" button
+              <button onClick={() => handleSubButtonClick("profile")}>
+                Profile
+              </button>
+          ) : (
+              // If not logged in, show "Sign in / Log in" button
+              <button onClick={() => handleSubButtonClick("signin")}>
+                Sign in / Log in
+              </button>
+          )}
+        </div>
+      </nav>
   );
 }
-
-
